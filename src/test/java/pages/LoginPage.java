@@ -1,54 +1,60 @@
 package pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.DriverManager;
 
 
 public class LoginPage extends BasePage {
-
     WebDriverWait wait = setWaitTimeForElements();
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc=\"test-Username\"]")
-    private WebElement usernameField;
-
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc=\"test-Password\"]")
-    private WebElement passwordField;
-
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"LOGIN\"]")
-    private WebElement loginButton;
-
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"PRODUCTS\"]")
-    private WebElement homePage;
-
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView")
-    private WebElement errorMessage;
+    By usernameField = AppiumBy.xpath("//android.widget.EditText[@content-desc='test-Username']");
+    By passwordField = AppiumBy.xpath("//android.widget.EditText[@content-desc='test-Password']");
+    By loginButton = AppiumBy.xpath("//android.widget.TextView[@text='LOGIN']");
+    By homePage = AppiumBy.xpath("//android.widget.TextView[@text='PRODUCTS']");
+    By errorMessage = AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView");
 
     public void setUsername(String username) {
-        wait.until(ExpectedConditions.visibilityOf(usernameField));
-        usernameField.click();
-        usernameField.sendKeys(username);
+        WebElement usernameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
+        usernameElement.click();
+        usernameElement.sendKeys(username);
     }
 
     public void setPassword(String password) {
-        passwordField.click();
-        passwordField.sendKeys(password);
+        WebElement passwordElement = wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
+        passwordElement.click();
+        passwordElement.sendKeys(password);
         driver.hideKeyboard();
     }
 
     public void tapLoginButton() {
-        loginButton.click();
+        WebElement loginElement = wait.until(ExpectedConditions.visibilityOfElementLocated(loginButton));
+        loginElement.click();
+        loginElement.click();
     }
 
-    public void setHomePage(){
-        wait.until(ExpectedConditions.visibilityOf(homePage));
-        Assert.assertEquals("PRODUCTS", homePage.getText());
-        Assert.assertTrue(homePage.isDisplayed());
+    public void setHomePage() {
+        WebElement homepageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(homePage));
+        Assert.assertEquals("PRODUCTS", homepageElement.getText());
     }
-    public void setErrorMessage(){
-        wait.until(ExpectedConditions.visibilityOf(errorMessage));
-        Assert.assertEquals("Username and password do not match any user in this service.", errorMessage.getText());
+
+    public void setErrorMessage() {
+        WebElement errorMessageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
+        Assert.assertEquals("Username and password do not match any user in this service.", errorMessageElement.getText());
+    }
+
+    public void performLogin(String user, String pass) {
+        if (driver == null) {
+            driver = DriverManager.startDriver();// Ensure WebDriver is initialized
+        }
+        setUsername(user);
+        setPassword(pass);
+        tapLoginButton();
+
     }
 }
