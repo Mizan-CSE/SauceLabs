@@ -23,7 +23,7 @@ public class LoginPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"PRODUCTS\"]")
     private WebElement homePage;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']//android.widget.TextView")
     private WebElement errorMessage;
 
     public void setUsername(String username) {
@@ -44,10 +44,11 @@ public class LoginPage extends BasePage {
 
     public void setHomePage(){
         wait.until(ExpectedConditions.visibilityOf(homePage));
+        Assert.assertEquals("PRODUCTS", homePage.getText());
         Assert.assertTrue(homePage.isDisplayed());
     }
     public void setErrorMessage(){
         wait.until(ExpectedConditions.visibilityOf(errorMessage));
-        Assert.assertTrue(errorMessage.isDisplayed());
+        Assert.assertEquals("Username and password do not match any user in this service.", errorMessage.getText());
     }
 }
