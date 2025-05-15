@@ -8,5 +8,6 @@ public class ReuseLogin{
     @Given("the user is logged in")
     public void theUserIsLoggedIn() {
         loginPage.performLogin("standard_user", "secret_sauce");
+        loginPage.setHomePage();
     }
 }
