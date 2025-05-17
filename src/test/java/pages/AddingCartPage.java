@@ -9,11 +9,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddingCartPage extends BasePage{
     WebDriverWait wait = setWaitTimeForElements();
-    By cartItems  =AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Cart']//android.widget.TextView");
+    public By cartItems  =AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Cart']//android.widget.TextView");
 
     public WebElement addCart(String productName){
-        By backPackCart = AppiumBy.xpath("//android.widget.TextView[@content-desc='test-Item title' and @text='"+productName+"']/following-sibling::android.view.ViewGroup[@content-desc='test-ADD TO CART']");
-        return wait.until(ExpectedConditions.elementToBeClickable(backPackCart));
+        By selectCartProduct = AppiumBy.xpath("//android.widget.TextView[@content-desc='test-Item title' and @text='"+productName+"']/following-sibling::android.view.ViewGroup[@content-desc='test-ADD TO CART']");
+        return wait.until(ExpectedConditions.elementToBeClickable(selectCartProduct));
     }
 
     public void singleItemCart(String productName){
