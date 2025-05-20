@@ -35,7 +35,6 @@ public class LoginPage extends BasePage {
     public void tapLoginButton() {
         WebElement loginElement = wait.until(ExpectedConditions.visibilityOfElementLocated(loginButton));
         loginElement.click();
-        loginElement.click();
     }
 
     public void setHomePage() {
